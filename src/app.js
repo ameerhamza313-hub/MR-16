@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import express from "express";
 import allRouter from "./router/index.js";
-
+import { dbConnection } from './dbConnection/config.js';
+dbConnection();
 
 const app = express();
 app.use(express.json());
