@@ -1,3 +1,6 @@
+import studentModel from "../../models/student/index.js";
+
+
 const students = [
   {
     name: "Hamza",
@@ -33,14 +36,17 @@ const studentsController = {
     }
   },
 
-  post: (req, res) => {
+  post: async (req, res) => {
     try {
       const payload = req.body;
-      students.push(payload);
+      const NewStudent = await studentModel.create({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+      });
       res
         .status(200)
-        .json({ message: "student created successfully", students });
-      console.log(students);
+        .json({ message: "student created successfully", NewStudent });
+      
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
     }
