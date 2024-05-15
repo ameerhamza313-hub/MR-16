@@ -1,22 +1,24 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../dbConnection/config.js";
 
-const studentModel = sequelize.define(
-  "student",
+const MarksModel = sequelize.define(
+  "Marks",
   {
     // Model attributes are defined here
-    firstName: {
+    English: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    Urdu: {
       type: DataTypes.STRING,
       // allowNull defaults to true
+    },
+    Physics: {
+      type: DataTypes.STRING,
     },
   },
   {
     // Other model options go here
   }
 );
-
-export default studentModel;
+export default MarksModel;

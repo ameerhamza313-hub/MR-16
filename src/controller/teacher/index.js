@@ -1,3 +1,5 @@
+import teacherModules from "../../models/teacher/index.js";
+
 const teachers = [
   {
     name: "akbar",
@@ -33,13 +35,16 @@ const teachersController = {
     }
   },
 
-  post: (req, res) => {
+  post: async (req, res) => {
     try {
       const payload = req.body;
-      teachers.push(payload);
+     const NewTeacher  =await teacherModules.create({
+        firstName: payload.firstName,
+        lastName: payload.lastName
+      })
       res
         .status(200)
-        .json({ message: "teacher created successfully", teachers });
+        .json({ message: "teacher created successfully", NewTeacher });
       console.log(teachers);
     } catch (error) {
       res.status(500).json({ message: "internal server error" });

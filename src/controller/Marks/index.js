@@ -1,3 +1,5 @@
+import MarksModel from "../../models/marks/index.js";
+
 const marks = [
   {
     FSC: "class1",
@@ -33,11 +35,15 @@ const marksController = {
     }
   },
 
-  post: (req, res) => {
+  post: async (req, res) => {
     try {
       const payload = req.body;
-      marks.push(payload);
-      res.status(200).json({ message: "marks created successfully", marks });
+      const NewMarks = await MarksModel.create({
+        English: payload.English,
+        Urdu: payload.Urdu,
+        Physics: payload.Physics,
+      });
+      res.status(200).json({ message: "marks created successfully", NewMarks });
       console.log(marks);
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
