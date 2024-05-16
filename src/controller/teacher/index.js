@@ -13,8 +13,15 @@ const teachers = [
   },
 ];
 const teachersController = {
-  getAll: (req, res) => {
+  getAll: async (req, res) => {
     try {
+      const teachers = await teacherModules.findAll({
+        where: {
+          firstName: "ali",
+        },
+        order: [["createdAt", "DESC"]],
+        limit: 2,
+      });
       res.json({ data: teachers });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
@@ -38,10 +45,10 @@ const teachersController = {
   post: async (req, res) => {
     try {
       const payload = req.body;
-     const NewTeacher  =await teacherModules.create({
+      const NewTeacher = await teacherModules.create({
         firstName: payload.firstName,
-        lastName: payload.lastName
-      })
+        lastName: payload.lastName,
+      });
       res
         .status(200)
         .json({ message: "teacher created successfully", NewTeacher });

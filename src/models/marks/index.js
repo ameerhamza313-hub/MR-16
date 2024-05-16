@@ -6,10 +6,11 @@ const MarksModel = sequelize.define(
   {
     // Model attributes are defined here
     English: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING ,
+      allowNull: true,
     },
     Urdu: {
+      
       type: DataTypes.STRING,
       // allowNull defaults to true
     },

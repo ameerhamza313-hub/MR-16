@@ -13,8 +13,15 @@ const marks = [
   },
 ];
 const marksController = {
-  getAll: (req, res) => {
+  getAll:async(req, res) => {
     try {
+    const marks = await MarksModel.findAll({
+      where: {
+        Physics: "Fail",
+      },
+      order: [["createdAt", "DESC"]],
+      limit: 4,
+    })
       res.json({ data: marks });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
@@ -44,6 +51,7 @@ const marksController = {
         Physics: payload.Physics,
       });
       res.status(200).json({ message: "marks created successfully", NewMarks });
+      NewMarks.save();
       console.log(marks);
     } catch (error) {
       res.status(500).json({ message: "internal server error" });

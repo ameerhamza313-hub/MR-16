@@ -1,5 +1,5 @@
+import { where } from "sequelize";
 import studentModel from "../../models/student/index.js";
-
 
 const students = [
   {
@@ -14,18 +14,31 @@ const students = [
   },
 ];
 const studentsController = {
-  getAll: (req, res) => {
+  getAll: async (req, res) => {
     try {
+      const students = await studentModel.findAll({
+        where: {
+          firstName: "khan",
+        },
+        order: [["createdAt", "DESC"]],
+        limit: 1,
+      });
       res.json({ data: students });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
     }
   },
 
-  getSingle: (req, res) => {
+  getSingle: async (req, res) => {
     try {
-      const { name } = req.params;
-      const student = students.find((ele) => ele.name == name);
+      const { id } = req.params;
+      // const student = await studentModel.findByPk(id);
+      const student = await studentModel.findOne({
+        where:{
+          id: 1,
+        }
+      })
+      //const student = students.find((ele) => ele.name == name);
 
       if (!student) {
         res.status(200).json({ message: "no student with this name" });
@@ -46,33 +59,41 @@ const studentsController = {
       res
         .status(200)
         .json({ message: "student created successfully", NewStudent });
-      
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
     }
   },
 
-  update: (req, res) => {
+  update: async (req, res) => {
     try {
-      const { name } = req.params;
-      const payload = req.body;
-      const studentIndex = students.findIndex((ele) => ele.name == name);
+      const { id } = req.params;
+      // const payload = req.body;
+      const studentIndex = await studentModel.findByPk(id);
+      studentIndex.firstName = "ali",
+      studentIndex.lastName = "khan"
+      // studentIndex.firstName = firstName;
+      // studentIndex.lastName = lastName;
+      await studentIndex.save();
+      
+      
 
-      if (studentIndex == -1) {
-        return res.status(404).json({ message: "student not found" });
-      }
-      if (payload.name) {
-        students[studentIndex].name = payload.name;
-      }
-      if (payload.age) {
-        students[studentIndex].name = payload.age;
-      }
-      if (payload.address) {
-        students[studentIndex].name = payload.address;
-      }
+      // const studentIndex = students.findIndex((ele) => ele.name == name);
+
+      // if (studentIndex == -1) {
+      //   return res.status(404).json({ message: "student not found" });
+      // }
+      // if (payload.name) {
+      //   students[studentIndex].name = payload.name;
+      // }
+      // if (payload.age) {
+      //   students[studentIndex].name = payload.age;
+      // }
+      // if (payload.address) {
+      //   students[studentIndex].name = payload.address;
+      // }
       res
         .status(200)
-        .json({ message: "student update successfully", students });
+        .json({ message: "student update successfully", studentIndex });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
     }
