@@ -80,7 +80,7 @@ const marksController = {
       // if (payload.english) {
       //   marks[marksIndex].english = payload.english;
       // }
-      res.status(200).json({ message: "marks update successfully", marks });
+      res.status(200).json({ message: "marks update successfully", marksIndex });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
     }
