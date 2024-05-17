@@ -5,10 +5,10 @@ import teachersController from "../../controller/teacher/index.js";
 
 
  teacherRouter.get("/teachers",teachersController.getAll);
- teacherRouter.get("/teacher/:name", teachersController.getSingle);
- teacherRouter.put("/teacher/:name", teachersController.update);
+ teacherRouter.get("/teacher/:id", teachersController.getSingle);
+ teacherRouter.put("/teacher/:id", teachersController.update);
  teacherRouter.post("/teacher", teachersController.post);
-teacherRouter.delete("/teacher/:name", teachersController.delete);
+teacherRouter.delete("/teacher/:id", teachersController.delete);
 
 
 export default teacherRouter;

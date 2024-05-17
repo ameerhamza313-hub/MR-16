@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import studentModel from "../../models/student/index.js";
 
 const students = [
@@ -17,11 +16,11 @@ const studentsController = {
   getAll: async (req, res) => {
     try {
       const students = await studentModel.findAll({
-        where: {
-          firstName: "khan",
-        },
-        order: [["createdAt", "DESC"]],
-        limit: 1,
+        // where: {
+        //   firstName: "khan",
+        // },
+        // order: [["createdAt", "DESC"]],
+        // limit: 1,
       });
       res.json({ data: students });
     } catch (error) {
@@ -34,10 +33,10 @@ const studentsController = {
       const { id } = req.params;
       // const student = await studentModel.findByPk(id);
       const student = await studentModel.findOne({
-        where:{
-          id: 1,
-        }
-      })
+        where: {
+          id: id,
+        },
+      });
       //const student = students.find((ele) => ele.name == name);
 
       if (!student) {
@@ -67,15 +66,13 @@ const studentsController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      // const payload = req.body;
+      const payload = req.body;
       const studentIndex = await studentModel.findByPk(id);
-      studentIndex.firstName = "ali",
-      studentIndex.lastName = "khan"
-      // studentIndex.firstName = firstName;
-      // studentIndex.lastName = lastName;
+      // studentIndex.firstName = "akbar",
+      // studentIndex.lastName = "khan"
+      studentIndex.firstName = payload.firstName,
+      studentIndex.lastName = payload.lastNameIndex
       await studentIndex.save();
-      
-      
 
       // const studentIndex = students.findIndex((ele) => ele.name == name);
 
@@ -91,24 +88,27 @@ const studentsController = {
       // if (payload.address) {
       //   students[studentIndex].name = payload.address;
       // }
-      res
-        .status(200)
-        .json({ message: "student update successfully", studentIndex });
+      res.status(200).json({ message: "student update successfully", studentIndex });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: "internal server error" });
     }
   },
 
-  delete: (req, res) => {
+  delete: async (req, res) => {
     try {
-      const { name } = req.params;
-      const studentIndex = students.findIndex((ele) => ele.name == name);
-      if (studentIndex == -1) {
-        return res.status(404).json({ message: "student not found" });
-      }
-      students.splice(studentIndex, 1);
-      res.status(200).json({ message: "student delete successfully" });
-      console.log(students);
+      const { id } = req.params;
+      const studentIndex = await studentModel.findByPk(id);
+      await studentIndex.destroy();
+      // const studentIndex = students.findIndex((ele) => ele.name == name);
+      // if (studentIndex == -1) {
+      //   return res.status(404).json({ message: "student not found" });
+      // }
+      // students.splice(studentIndex, 1);
+      res
+        .status(200)
+        .json({ message: "student delete successfully", studentIndex });
+      console.log(studentIndex);
     } catch (error) {
       res.student(500).json({ message: "internal server error" });
     }
