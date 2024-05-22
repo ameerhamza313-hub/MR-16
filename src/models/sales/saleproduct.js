@@ -1,26 +1,27 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../dbConnection/config.js";
 import SalesModel from "./sale.js";
-import StockProductModel from "./products.js";
+import ProductModel from "../products/index.js";
+
 const SaleProductModel = sequelize.define(
   "SaleProduct",
   {
-    productName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+   
     productQuantity: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
     rate: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
     },
   },
   {}
 );
-// SalesModel.hasMany(ProductModel);
-// ProductModel.belongsTo(SalesModel);
-StockProductModel.hasMany(SalesModel);
-SalesModel.belongsTo(SaleProductModel);
+SalesModel.hasMany(SaleProductModel);
+SaleProductModel.belongsTo(SalesModel);
+
+
+ProductModel.hasMany(SaleProductModel);
+SaleProductModel.belongsTo(ProductModel);
 
 export default SaleProductModel;
+ 
