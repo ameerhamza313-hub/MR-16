@@ -5,7 +5,8 @@ import attendRouter from "./attendence/index.js";
 import employRouter from "./employ/index.js";
 import salesRouter from "./sales/index.js";
 import productsRouter from "./products/index.js";
-
+import categoryRouter from "./products/Category/index.js";
+import authRouter from "./auth/index.js";
 const allRouter = [
   studentRouter,
   teacherRouter,
@@ -13,7 +14,10 @@ const allRouter = [
   attendRouter,
   employRouter,
   salesRouter,
-  productsRouter
+  productsRouter,
+  categoryRouter,
+  authRouter,
+
 ];
 
 export default allRouter;

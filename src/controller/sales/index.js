@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import SalesModel from "../../models/sales/sale.js";
 import SaleProductModel from "../../models/sales/saleproduct.js";
 import ProductModel from "../../models/products/index.js";
@@ -6,8 +5,7 @@ import ProductModel from "../../models/products/index.js";
 const SalesController = {
   getAll: async (req, res) => {
     try {
-      const sales = await SalesModel.findAll({
-      });
+      const sales = await SalesModel.findAll({});
       res.json({ data: sales });
     } catch (error) {
       res.status(500).json({ message: "internal server error" });
