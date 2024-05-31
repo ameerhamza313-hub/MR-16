@@ -1,6 +1,7 @@
 import userModel from "../../models/user/index.js";
 import jwt from "jsonwebtoken";
 import { compare, hash } from "bcrypt";
+import tokenModel from "../../models/auth/token.js";
 
 const authController = {
   singUp: async (req, res) => {
@@ -46,7 +47,8 @@ const authController = {
       );
       if (!comparePassword) {
         res.status(401).json({ message: "invalid credentials" });
-      }
+      };
+      
 
       const data = {
         id: userCheck.id,
@@ -54,8 +56,11 @@ const authController = {
         firstName: userCheck.firstName,
       };
       const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: "6h",
       });
+      await tokenModel.create(
+        {token},
+      );
       res.status(200).json({ data: token });
     } catch (error) {
       console.log(error);
