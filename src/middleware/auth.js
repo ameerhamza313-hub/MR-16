@@ -8,12 +8,11 @@ let authMiddleware = async (req, res, next) => {
   }
   token = token.replace("Bearer ", "");
   console.log(token);
-const authToken =await  tokenModel.findOne({
-  where: {token: token}
-})
-  if(!authToken){
+  const authToken = await tokenModel.findOne({
+    where: { token: token },
+  });
+  if (!authToken) {
     return res.status(401).json({ message: "unauthorized" });
- 
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);

@@ -3,8 +3,11 @@ import express from "express";
 import allRouter from "./router/index.js";
 import { dbConnection } from "./dbConnection/config.js";
 import syncDB from "./dbConnection/init.js";
+import main from "./Email/index.js";
 dbConnection();
 syncDB();
+main().catch(console.error);
+
 
 const app = express();
 app.use(express.json());

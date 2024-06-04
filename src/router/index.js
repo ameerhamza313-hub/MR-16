@@ -7,6 +7,8 @@ import salesRouter from "./sales/index.js";
 import productsRouter from "./products/index.js";
 import categoryRouter from "./products/Category/index.js";
 import authRouter from "./auth/index.js";
+import multerRouter from "./multer/index.js";
+
 const allRouter = [
   studentRouter,
   teacherRouter,
@@ -17,6 +19,8 @@ const allRouter = [
   productsRouter,
   categoryRouter,
   authRouter,
+  multerRouter
+  
 
 ];
 

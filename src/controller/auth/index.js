@@ -56,12 +56,12 @@ const authController = {
         firstName: userCheck.firstName,
       };
       const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
-        expiresIn: "6h",
+        expiresIn: process.env.ExpireIn
       });
       await tokenModel.create(
         {token},
       );
-      res.status(200).json({ data: token });
+      res.status(200).json({ data: token, payload });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "internal server error",error });
